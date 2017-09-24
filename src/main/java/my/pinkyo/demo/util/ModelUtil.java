@@ -1,7 +1,7 @@
-package my.yinkn.sprintboot.demo.util;
+package my.pinkyo.demo.util;
 
-import my.yinkn.sprintboot.demo.entity.UserEntity;
-import my.yinkn.sprintboot.demo.model.User;
+import my.pinkyo.demo.entity.UserEntity;
+import my.pinkyo.demo.model.User;
 
 /**
  * Created by yinkn on 2017/7/9.

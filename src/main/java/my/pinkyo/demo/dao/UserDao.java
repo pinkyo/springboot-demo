@@ -1,6 +1,6 @@
-package my.yinkn.sprintboot.demo.dao;
+package my.pinkyo.demo.dao;
 
-import my.yinkn.sprintboot.demo.entity.UserEntity;
+import my.pinkyo.demo.entity.UserEntity;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**

@@ -1,4 +1,4 @@
-package my.yinkn.sprintboot.demo.entity;
+package my.pinkyo.demo.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 

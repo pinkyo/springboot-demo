@@ -1,4 +1,4 @@
-package my.yinkn.sprintboot.demo.exceptionHandler;
+package my.pinkyo.demo.exceptionHandler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

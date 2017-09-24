@@ -1,7 +1,5 @@
-package my.yinkn.sprintboot.demo;
+package my.pinkyo.demo;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -13,9 +11,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 public class MyConfiguration {
-    @Value("${jetty.port}")
-    private int jettyPort;
-
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
@@ -24,10 +19,5 @@ public class MyConfiguration {
                 registry.addMapping("/**");
             }
         };
-    }
-
-    @Bean
-    public JettyEmbeddedServletContainerFactory jettyConfigurer() {
-        return new JettyEmbeddedServletContainerFactory("/demo", jettyPort);
     }
 }

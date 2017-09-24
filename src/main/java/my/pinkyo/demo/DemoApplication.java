@@ -1,4 +1,4 @@
-package my.yinkn.sprintboot.demo;
+package my.pinkyo.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

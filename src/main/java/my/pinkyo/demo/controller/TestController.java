@@ -1,16 +1,17 @@
-package my.yinkn.sprintboot.demo.controller;
+package my.pinkyo.demo.controller;
 
-import my.yinkn.sprintboot.demo.entity.UserEntity;
-import my.yinkn.sprintboot.demo.model.User;
-import my.yinkn.sprintboot.demo.dao.UserDao;
-import my.yinkn.sprintboot.demo.util.ModelUtil;
+import my.pinkyo.demo.dao.UserDao;
+import my.pinkyo.demo.entity.UserEntity;
+import my.pinkyo.demo.model.User;
+import my.pinkyo.demo.util.ModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Created by yinkn on 2017/7/9.
+ * Created by pinkyo on 2017/7/9.
  */
 @RestController
 @RequestMapping("test")
@@ -22,6 +23,7 @@ public class TestController {
     UserDao userDao;
 
     @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
     public String createUser(@RequestBody @Validated User user) {
         UserEntity entity = ModelUtil.convertToEntity(user);
         userDao.save(entity);

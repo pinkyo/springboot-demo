@@ -1,4 +1,4 @@
-package my.yinkn.sprintboot.demo.model;
+package my.pinkyo.demo.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
 

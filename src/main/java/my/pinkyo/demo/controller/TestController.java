@@ -37,6 +37,17 @@ public class TestController {
         return ModelUtil.convertToModel(entity);
     }
 
+    @RequestMapping(method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateUser(@RequestBody @Validated User user) {
+        UserEntity entity = userDao.findByName(user.getName());
+        if (entity == null) {
+            throw new RuntimeException("user is not found.");
+        }
+        entity.setSex(user.getSex());
+        userDao.save(entity);
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     private String getDefaultName() {
         return defaultName;

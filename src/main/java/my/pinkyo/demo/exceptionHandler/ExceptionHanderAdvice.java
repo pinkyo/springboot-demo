@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by yinkn on 2017/7/9.
  */
-@ControllerAdvice
+@ControllerAdvice(basePackages = "my.pinkyo.demo.controller")
 public class ExceptionHanderAdvice {
 
     @ExceptionHandler(Exception.class)

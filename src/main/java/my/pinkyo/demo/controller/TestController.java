@@ -24,11 +24,11 @@ public class TestController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public String createUser(@RequestBody @Validated User user) {
+    public User createUser(@RequestBody @Validated User user) {
         UserEntity entity = ModelUtil.convertToEntity(user);
         userDao.save(entity);
 
-        return "successful";
+        return ModelUtil.convertToModel(entity);
     }
 
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)

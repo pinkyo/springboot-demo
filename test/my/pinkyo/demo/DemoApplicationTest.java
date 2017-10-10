@@ -20,8 +20,24 @@ public class DemoApplicationTest {
 
     @Test
     public void testCreate() throws Exception {
-        User result = createUser("test", "test");
+        User result = createUser("testCreate", "male");
         assertNotNull(result);
+    }
+
+    @Test
+    public void testGetByName() throws Exception {
+        createUser("testGetByName", "male");
+        User user = restTemplate.getForObject(basePath + "/{name}", User.class, "testGetByName");
+        assertNotNull(user);
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        String name = "testUpdate";
+        User user = createUser(name, "male");
+
+        user.setSex("female");
+        restTemplate.put(basePath, user);
     }
 
     private User createUser(String name, String sex) {

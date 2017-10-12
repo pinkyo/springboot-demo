@@ -8,10 +8,12 @@ import com.codahale.metrics.Timer;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.concurrent.TimeUnit;
 
+@Component
 @Aspect
 public class PerformanceAdvice {
 
@@ -25,7 +27,7 @@ public class PerformanceAdvice {
         reporter.start(1, TimeUnit.MINUTES);
     }
 
-    @Around(value = "my.pinkyo.demo.controller.TestController.*")
+    @Around("execution(* my.pinkyo.demo.controller.TestController.*(..))")
     public void recordMetricsData(ProceedingJoinPoint pjp) {
         MetricRegistry registry = SharedMetricRegistries.getOrCreate("demo");
         final Timer timer = registry.timer(pjp.getSignature().getDeclaringTypeName());

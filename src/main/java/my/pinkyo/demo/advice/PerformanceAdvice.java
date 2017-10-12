@@ -5,17 +5,23 @@ import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.SharedMetricRegistries;
 import com.codahale.metrics.Timer;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.lang.invoke.MethodHandles;
 import java.util.concurrent.TimeUnit;
 
+@Order(1)
 @Component
 @Aspect
 public class PerformanceAdvice {
+    private static final Log LOG = LogFactory.getLog(MethodHandles.lookup().lookupClass());
 
     @PostConstruct
     public void setUp() {
@@ -28,17 +34,21 @@ public class PerformanceAdvice {
     }
 
     @Around("execution(* my.pinkyo.demo.controller.TestController.*(..))")
-    public void recordMetricsData(ProceedingJoinPoint pjp) {
+    public Object recordMetricsData(ProceedingJoinPoint pjp) {
         MetricRegistry registry = SharedMetricRegistries.getOrCreate("demo");
         final Timer timer = registry.timer(pjp.getSignature().getDeclaringTypeName());
         Timer.Context context = timer.time();
 
         try {
-            pjp.proceed();
+            Object retVal = pjp.proceed();
+            return retVal;
         } catch (Throwable throwable) {
+            LOG.error(throwable);
             if (context != null) {
                 context.close();
             }
         }
+
+        return null;
     }
 }

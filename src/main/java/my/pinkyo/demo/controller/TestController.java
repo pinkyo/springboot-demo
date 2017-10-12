@@ -26,9 +26,9 @@ public class TestController {
     @ResponseStatus(HttpStatus.CREATED)
     public User createUser(@RequestBody @Validated User user) {
         UserEntity entity = ModelUtil.convertToEntity(user);
-        userDao.save(entity);
+        UserEntity result = userDao.save(entity);
 
-        return ModelUtil.convertToModel(entity);
+        return ModelUtil.convertToModel(result);
     }
 
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)

@@ -25,6 +25,9 @@ public class TestController {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public User createUser(@RequestBody @Validated User user) {
+        if (userDao.findByName(user.getName()) != null) {
+            throw new RuntimeException("user have existed.");
+        }
         UserEntity entity = ModelUtil.convertToEntity(user);
         UserEntity result = userDao.save(entity);
 

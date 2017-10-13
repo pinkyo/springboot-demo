@@ -17,7 +17,6 @@ import javax.annotation.PostConstruct;
 import java.lang.invoke.MethodHandles;
 import java.util.concurrent.TimeUnit;
 
-@Order(1)
 @Component
 @Aspect
 public class PerformanceAdvice {

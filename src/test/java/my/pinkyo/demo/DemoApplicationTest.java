@@ -8,10 +8,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = DemoApplication.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        classes = {DemoApplication.class})
 public class DemoApplicationTest {
     public static final String basePath = "/test";
 
@@ -23,6 +25,15 @@ public class DemoApplicationTest {
         String name = "testCreate";
         User result = createUser(name, "male");
         assertNotNull(result);
+    }
+
+    @Test
+    public void testCreateFail() throws Exception {
+        String name = "testCreateException";
+        createUser(name, "male");
+        User user = createUser(name, "male");
+
+        assertNull(user);
     }
 
     @Test

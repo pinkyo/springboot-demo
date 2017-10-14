@@ -53,6 +53,14 @@ public class DemoApplicationTest {
         restTemplate.put(basePath, user);
     }
 
+    @Test
+    public void testDelete() {
+        String name = "testDelete";
+        createUser(name, "male");
+
+        restTemplate.delete(basePath + "/{name}", name);
+    }
+
     private User createUser(String name, String sex) {
         User user = new User();
         user.setName(name);

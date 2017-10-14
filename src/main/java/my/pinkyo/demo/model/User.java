@@ -1,19 +1,18 @@
 package my.pinkyo.demo.model;
 
-import org.hibernate.validator.constraints.Length;
-
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Created by yinkn on 2017/7/9.
  */
 public class User {
     @NotNull
-    @Length(min = 1, max = 100)
+    @Size(min = 1, max = 100)
     private String name;
 
     @NotNull
-    @Length(min = 1, max = 20)
+    @Size(min = 1, max = 20)
     private String sex;
 
     public String getName() {

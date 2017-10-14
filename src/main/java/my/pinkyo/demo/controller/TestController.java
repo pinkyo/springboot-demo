@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by pinkyo on 2017/7/9.
  */
@@ -23,7 +25,7 @@ public class TestController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public User createUser(@RequestBody @Validated User user) {
+    public User createUser(@RequestBody @Validated @NotNull User user) {
         return userService.createUser(user);
     }
 
@@ -34,13 +36,13 @@ public class TestController {
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateUser(@RequestBody @Validated User user) {
+    public void updateUser(@RequestBody @Validated @NotNull User user) {
         userService.updateUser(user);
     }
 
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUserByName(String name) {
+    public void deleteUserByName(@PathVariable String name) {
         userService.deleteUserByName(name);
     }
 

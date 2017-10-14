@@ -4,24 +4,34 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.invoke.MethodHandles;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by yinkn on 2017/7/9.
  */
-@ControllerAdvice(basePackages = "my.pinkyo.demo.controller")
+@RestControllerAdvice
 public class ExceptionHanderAdvice {
     private Log log = LogFactory.getLog(MethodHandles.lookup().lookupClass());
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Map<String, String> handleArgumentNOtValidException(MethodArgumentNotValidException ex) {
+        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
+        return fieldErrors.stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
+    }
+
     @ExceptionHandler(Exception.class)
-    @ResponseBody
-    ResponseEntity<?> handleControllerException(HttpServletRequest request, Throwable ex) {
-        log.error(ex);
-        return new ResponseEntity<Object>("Internal Error", HttpStatus.INTERNAL_SERVER_ERROR);
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    String handleControllerException(Throwable ex) {
+        log.error(ex.toString());
+        return "Internal Error";
     }
 }

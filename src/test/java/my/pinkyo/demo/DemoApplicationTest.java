@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
@@ -27,13 +28,13 @@ public class DemoApplicationTest {
         assertNotNull(result);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void testCreateFail() throws Exception {
         String name = "testCreateException";
         createUser(name, "male");
         User user = createUser(name, "male");
 
-        assertNull(user);
+        fail();
     }
 
     @Test

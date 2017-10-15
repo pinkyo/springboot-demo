@@ -2,6 +2,7 @@ package my.pinkyo.demo.service.impl.v1;
 
 import my.pinkyo.demo.dao.UserDao;
 import my.pinkyo.demo.entity.UserEntity;
+import my.pinkyo.demo.exception.BadRequestException;
 import my.pinkyo.demo.model.User;
 import my.pinkyo.demo.service.UserService;
 import my.pinkyo.demo.util.ModelUtil;
@@ -18,7 +19,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User createUser(User user) {
-        if (isUserExist(user.getName())) { throw new RuntimeException("user have existed."); }
+        if (isUserExist(user.getName())) { throw new BadRequestException("user have existed."); }
 
         UserEntity entity = ModelUtil.convertToEntity(user);
         UserEntity result = userDao.save(entity);
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void updateUser(User user) {
-        if (!isUserExist(user.getName())) { throw new RuntimeException("user is not found."); }
+        if (!isUserExist(user.getName())) { throw new BadRequestException("user is not found."); }
 
         UserEntity entity = userDao.findByName(user.getName());
         entity.setSex(user.getSex());
@@ -37,12 +38,17 @@ public class UserServiceImpl implements UserService{
     @Override
     public User getUserByName(String name) {
         UserEntity entity = userDao.findByName(name);
+        if (entity == null) {
+            throw new BadRequestException("user is not found.");
+        }
         return ModelUtil.convertToModel(entity);
     }
 
     @Override
     public void deleteUserByName(String name) {
-        if (!isUserExist(name)) return;
+        if (!isUserExist(name)) {
+            throw new BadRequestException("user is not found.");
+        }
 
         UserEntity entity = userDao.findByName(name);
         userDao.delete(entity);

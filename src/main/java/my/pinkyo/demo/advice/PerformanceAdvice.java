@@ -33,7 +33,7 @@ public class PerformanceAdvice {
     }
 
     @Around("execution(* my.pinkyo.demo.controller.TestController.*(..))")
-    public Object recordMetricsData(ProceedingJoinPoint pjp) {
+    public Object recordMetricsData(ProceedingJoinPoint pjp) throws Throwable {
         MetricRegistry registry = SharedMetricRegistries.getOrCreate("demo");
         final Timer timer = registry.timer(pjp.getSignature().getDeclaringTypeName());
         Timer.Context context = timer.time();
@@ -46,8 +46,8 @@ public class PerformanceAdvice {
             if (context != null) {
                 context.close();
             }
-        }
 
-        return null;
+            throw throwable;
+        }
     }
 }

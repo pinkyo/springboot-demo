@@ -3,7 +3,6 @@ package my.pinkyo.demo.controller;
 import my.pinkyo.demo.model.User;
 import my.pinkyo.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +15,6 @@ import javax.validation.constraints.NotNull;
 @RestController
 @RequestMapping("test")
 public class TestController {
-
-    @Value("${test.default.name}")
-    private String defaultName;
-
     @Autowired
     private UserService userService;
 
@@ -45,10 +40,4 @@ public class TestController {
     public void deleteUserByName(@PathVariable String name) {
         userService.deleteUserByName(name);
     }
-
-    @RequestMapping(method = RequestMethod.GET)
-    private String getDefaultName() {
-        return defaultName;
-    }
-
 }

@@ -30,7 +30,6 @@ public class ExceptionHanderAdvice {
     }
 
     @ExceptionHandler(BadRequestException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     String handleBadRequestException(BadRequestException ex) {
         return ex.getMessage();
     }

@@ -25,3 +25,6 @@ hs_err_pid*
 # IDE realted file
 .idea/
 *.iml
+.classpath
+.project
+.settings/

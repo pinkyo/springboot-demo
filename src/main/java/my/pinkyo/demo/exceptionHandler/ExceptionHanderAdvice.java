@@ -1,6 +1,9 @@
 package my.pinkyo.demo.exceptionHandler;
 
-import my.pinkyo.demo.exception.BadRequestException;
+import java.lang.invoke.MethodHandles;
+import java.util.Collections;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
@@ -10,10 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.lang.invoke.MethodHandles;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import my.pinkyo.demo.exception.BadRequestException;
 
 /**
  * Created by yinkn on 2017/7/9.
@@ -25,8 +25,9 @@ public class ExceptionHanderAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     Map<String, String> handleArgumentNOtValidException(MethodArgumentNotValidException ex) {
-        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
-        return fieldErrors.stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
+        FieldError fieldError = ex.getBindingResult().getFieldErrors().get(0);
+        return Collections.singletonMap("validationError", 
+        		String.format("%s:%s", fieldError.getField(), fieldError.getDefaultMessage()));
     }
 
     @ExceptionHandler(BadRequestException.class)

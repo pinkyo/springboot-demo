@@ -19,7 +19,7 @@ import my.pinkyo.demo.exception.BadRequestException;
  * Created by yinkn on 2017/7/9.
  */
 @RestControllerAdvice
-public class ExceptionHanderAdvice {
+public class ExceptionHandlerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     Map<String, String> handleArgumentNOtValidException(MethodArgumentNotValidException ex) {

@@ -20,8 +20,6 @@ import java.util.stream.Collectors;
  */
 @RestControllerAdvice
 public class ExceptionHanderAdvice {
-    private Log log = LogFactory.getLog(MethodHandles.lookup().lookupClass());
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     Map<String, String> handleArgumentNOtValidException(MethodArgumentNotValidException ex) {
@@ -37,7 +35,6 @@ public class ExceptionHanderAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     String handleControllerException(Throwable ex) {
-        log.error(ex.toString());
         return "Internal Error";
     }
 }

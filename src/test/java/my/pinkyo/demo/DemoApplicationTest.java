@@ -1,15 +1,20 @@
 package my.pinkyo.demo;
 
-import my.pinkyo.demo.model.User;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import my.pinkyo.demo.model.User;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
@@ -23,17 +28,23 @@ public class DemoApplicationTest {
     @Test
     public void testCreate() throws Exception {
         String name = "testCreate";
-        User result = createUser(name, "male");
-        assertNotNull(result);
+        ResponseEntity<User> result = createUser(name, "male");
+        assertEquals(HttpStatus.CREATED, result.getStatusCode());
     }
 
     @Test(expected = Exception.class)
     public void testCreateFail() throws Exception {
         String name = "testCreateException";
         createUser(name, "male");
-        User user = createUser(name, "male");
+        createUser(name, "male");
 
         fail();
+    }
+    
+    @Test
+    public void testBadParameter() throws Exception {
+    	ResponseEntity<User> result = createUser(null, "male");
+    	assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
     }
 
     @Test
@@ -47,7 +58,7 @@ public class DemoApplicationTest {
     @Test
     public void testUpdate() throws Exception {
         String name = "testUpdate";
-        User user = createUser(name, "male");
+        User user = createUser(name, "male").getBody();
 
         user.setSex("female");
         restTemplate.put(basePath, user);
@@ -61,11 +72,11 @@ public class DemoApplicationTest {
         restTemplate.delete(basePath + "/{name}", name);
     }
 
-    private User createUser(String name, String sex) {
+    private ResponseEntity<User> createUser(String name, String sex) {
         User user = new User();
         user.setName(name);
         user.setSex(sex);
 
-        return restTemplate.postForObject(basePath, user, User.class);
+        return restTemplate.postForEntity(basePath, user, User.class);
     }
 }

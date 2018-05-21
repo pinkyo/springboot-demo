@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 public class ExceptionHanderAdviceTest {
-	ExceptionHanderAdvice advice = new ExceptionHanderAdvice();
+	ExceptionHandlerAdvice advice = new ExceptionHandlerAdvice();
 	
 	@Test
 	public void test() {

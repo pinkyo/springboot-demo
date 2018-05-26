@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-@Profile("debug")
+@Profile("test")
 @Component
 @Aspect
 public class LoggerAdvice {

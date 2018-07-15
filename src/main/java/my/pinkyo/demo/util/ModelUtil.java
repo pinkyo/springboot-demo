@@ -19,6 +19,8 @@ public class ModelUtil {
         User user = new User();
         user.setName(entity.getName());
         user.setSex(entity.getSex());
+        user.setCreatedTime(entity.getCreatedTime());
+        user.setLastUpdatedTime(entity.getLastUpdatedTime());
 
         return user;
     }
